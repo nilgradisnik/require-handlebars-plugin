@@ -1,5 +1,20 @@
 # Require.js Handlebars Plugin
 
+## Fork modification
+
+Map key from object tree. So you can write json keys that are more than one level of depth.
+```
+{
+"key": {
+  "depth1": {
+    "depth2": {
+      ...
+    }
+  }
+}
+}
+```
+
 ## Version
 
 Handlebars : `v1.0.rc.1`
