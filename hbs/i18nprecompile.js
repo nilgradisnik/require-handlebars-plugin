@@ -1,4 +1,7 @@
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
+
+// Modified by Nil Gradisnik <nil.gradisnik@gmail.com>
+
 define(['Handlebars', "hbs/underscore"], function ( Handlebars, _ ) {
 
   function replaceLocaleStrings ( ast, mapping, options ) {
@@ -13,7 +16,15 @@ define(['Handlebars', "hbs/underscore"], function ( Handlebars, _ ) {
 
           if ( statement.params.length && statement.params[0].string ) {
             var key = statement.params[0].string;
-            newString = mapping[ key ] || (options.originalKeyFallback ? key : newString);
+
+            // Map from json object tree
+            var mapValue,
+                keys = key.split(".");
+            for (var j=0; j<keys.length; j++) {
+              mapValue = j === 0 ? mapping[keys[j]] : mapValue[keys[j]];
+            }
+
+            newString = mapValue || (options.originalKeyFallback ? key : newString);
           }
           ast.statements[i] = new Handlebars.AST.ContentNode(newString);
         }
